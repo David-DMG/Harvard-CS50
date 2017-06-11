@@ -4,25 +4,27 @@
 #include <string.h>
 #include <ctype.h>
 
+#define ALPHABET 26
+
 int main(int argc, string argv[])
 {
     if (argc != 2)
     {
-        // return 1 and error msg
-        printf("Error: must enter a command line cipher key!\n");
+        // error msg and return 1
+        printf("Error! Must enter a command line cipher key\n");
         return 1;
     }
         
     //declaring variables
     int cipher_key = atoi(argv[1]);
     string plaintxt;
-    int ciphered_char;
+    int encrypted_char;
     int plaintxt_char;
     
     if (cipher_key < 1)
     {
-        // return 1 and error msg
-        printf("Error: Your cipher key must be a non-negative interger!\n");
+        // error msg and return 1
+        printf("Error! Your cipher key must be a non-negative interger\n");
         return 1;
     }
     
@@ -31,35 +33,32 @@ int main(int argc, string argv[])
     plaintxt = get_string();
     printf("ciphertext: ");
         
-    // loop for cycling though characters of string 'plaintxt'
+    // loop through characters txt to encrypt
     for (int i = 0, n = strlen(plaintxt); i < n; i++)
     {
-
         plaintxt_char = plaintxt[i];
-         
-        //if its a plaintxt_char
+        
+        //keep case, change ascii to alpha base(i.e a=0, b=1 ...), apply caesat cipher, % 26 to rotate through alphabet, return to ascii, print
         if (isalpha(plaintxt_char))
         {
-            //if its lower case encrypt 'plaintxt_char' using cipher_key, use %26 to roll over numbers is 26 range, and then apply to lower case ascii range
             if (islower(plaintxt_char))
-            {
-            ciphered_char = (((plaintxt_char - 97 + cipher_key) % 26) + 97);
-            printf("%c", ciphered_char);
+            {                 
+                encrypted_char = ((((plaintxt_char - 'a') + cipher_key) % ALPHABET) + 'a');
+                printf("%c", encrypted_char);
             }
-            //if its upper case encrypt 'plaintxt_char' using cipher_key, use %26 to roll over numbers is 26 range, and then apply to upper case ascii range
             else if (isupper(plaintxt_char))
             {
-            ciphered_char = (((plaintxt_char - 65 + cipher_key) % 26) + 65);
-            printf("%c", ciphered_char);
+                encrypted_char = ((((plaintxt_char - 'A') + cipher_key) % ALPHABET) + 'A');
+                printf("%c", encrypted_char);
             }
         }
-        //if not alhpa print the plaintxt_char unencrypted
+        //if plaintxt_char is not alhpa print char unencrypted
         else
         {
             printf("%c", plaintxt_char);
-            }
+        }
     }
+    //end with a new line
     printf("\n");
     return 0;
 }
-

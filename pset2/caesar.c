@@ -58,7 +58,7 @@ int main(int argc, string argv[])
             printf("%c", plaintxt_char);
         }
     }
-    //end with a new line
+    //end with a new lines
     printf("\n");
     return 0;
 }
